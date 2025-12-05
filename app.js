@@ -155,7 +155,8 @@ function renderSelectedFeelings() {
     
     // Show entry form and set date to today
     entryFormSection.style.display = 'block';
-    const today = new Date().toISOString().split('T')[0];
+    const now = new Date();
+    const today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
     entryDateInput.value = today;
     
     // Scroll to entry form
@@ -221,7 +222,7 @@ function saveJournalEntry() {
     }
     
     // Use the date from the form or default to today
-    const selectedDate = entryDateInput.value ? new Date(entryDateInput.value + 'T12:00:00') : new Date();
+    const selectedDate = entryDateInput.value ? new Date(entryDateInput.value) : new Date();
     
     const entry = {
         date: selectedDate.toISOString(),
@@ -299,28 +300,40 @@ function renderJournalEntries() {
         if (entry.why) {
             const whyDiv = document.createElement('div');
             whyDiv.className = 'entry-detail';
-            whyDiv.innerHTML = `<strong>Why:</strong> ${entry.why}`;
+            const whyLabel = document.createElement('strong');
+            whyLabel.textContent = 'Why: ';
+            whyDiv.appendChild(whyLabel);
+            whyDiv.appendChild(document.createTextNode(entry.why));
             entryDiv.appendChild(whyDiv);
         }
         
         if (entry.high) {
             const highDiv = document.createElement('div');
             highDiv.className = 'entry-detail';
-            highDiv.innerHTML = `<strong>High:</strong> ${entry.high}`;
+            const highLabel = document.createElement('strong');
+            highLabel.textContent = 'High: ';
+            highDiv.appendChild(highLabel);
+            highDiv.appendChild(document.createTextNode(entry.high));
             entryDiv.appendChild(highDiv);
         }
         
         if (entry.low) {
             const lowDiv = document.createElement('div');
             lowDiv.className = 'entry-detail';
-            lowDiv.innerHTML = `<strong>Low:</strong> ${entry.low}`;
+            const lowLabel = document.createElement('strong');
+            lowLabel.textContent = 'Low: ';
+            lowDiv.appendChild(lowLabel);
+            lowDiv.appendChild(document.createTextNode(entry.low));
             entryDiv.appendChild(lowDiv);
         }
         
         if (entry.grateful) {
             const gratefulDiv = document.createElement('div');
             gratefulDiv.className = 'entry-detail';
-            gratefulDiv.innerHTML = `<strong>Grateful for:</strong> ${entry.grateful}`;
+            const gratefulLabel = document.createElement('strong');
+            gratefulLabel.textContent = 'Grateful for: ';
+            gratefulDiv.appendChild(gratefulLabel);
+            gratefulDiv.appendChild(document.createTextNode(entry.grateful));
             entryDiv.appendChild(gratefulDiv);
         }
         
