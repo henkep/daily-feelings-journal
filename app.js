@@ -19,6 +19,12 @@ const customFeelingsContainer = document.getElementById('custom-feelings');
 const customFeelingInput = document.getElementById('custom-feeling-input');
 const addFeelingBtn = document.getElementById('add-feeling-btn');
 const selectedFeelingsContainer = document.getElementById('selected-feelings');
+const entryFormSection = document.getElementById('entry-form-section');
+const entryDateInput = document.getElementById('entry-date');
+const entryWhyInput = document.getElementById('entry-why');
+const entryHighInput = document.getElementById('entry-high');
+const entryLowInput = document.getElementById('entry-low');
+const entryGratefulInput = document.getElementById('entry-grateful');
 const saveEntryBtn = document.getElementById('save-entry-btn');
 const journalEntriesContainer = document.getElementById('journal-entries');
 
@@ -136,7 +142,7 @@ function renderSelectedFeelings() {
     
     if (selectedFeelings.size === 0) {
         selectedFeelingsContainer.innerHTML = '<p class="empty-state">No feelings selected yet. Click on any feeling above!</p>';
-        saveEntryBtn.style.display = 'none';
+        entryFormSection.style.display = 'none';
         return;
     }
     
@@ -147,7 +153,14 @@ function renderSelectedFeelings() {
         selectedFeelingsContainer.appendChild(tag);
     });
     
-    saveEntryBtn.style.display = 'block';
+    // Show entry form and set date to today
+    entryFormSection.style.display = 'block';
+    // Using 'en-CA' locale to get YYYY-MM-DD format for date input (ISO 8601 format)
+    const today = new Date().toLocaleDateString('en-CA');
+    entryDateInput.value = today;
+    
+    // Scroll to entry form
+    entryFormSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 // Add custom feeling
@@ -208,9 +221,17 @@ function saveJournalEntry() {
         return;
     }
     
+    // Use the date from the form or default to today
+    // Parse the date as local time by appending a time component
+    const selectedDate = entryDateInput.value ? new Date(entryDateInput.value + 'T00:00:00') : new Date();
+    
     const entry = {
-        date: new Date().toISOString(),
-        feelings: Array.from(selectedFeelings)
+        date: selectedDate.toISOString(),
+        feelings: Array.from(selectedFeelings),
+        why: entryWhyInput.value.trim(),
+        high: entryHighInput.value.trim(),
+        low: entryLowInput.value.trim(),
+        grateful: entryGratefulInput.value.trim()
     };
     
     journalEntries.unshift(entry); // Add to beginning of array
@@ -222,8 +243,13 @@ function saveJournalEntry() {
     
     saveToLocalStorage();
     
-    // Clear selections
+    // Clear selections and form
     selectedFeelings.clear();
+    entryWhyInput.value = '';
+    entryHighInput.value = '';
+    entryLowInput.value = '';
+    entryGratefulInput.value = '';
+    
     renderDefaultFeelings();
     renderCustomFeelings();
     renderSelectedFeelings();
@@ -270,6 +296,48 @@ function renderJournalEntries() {
         
         entryDiv.appendChild(dateDiv);
         entryDiv.appendChild(feelingsDiv);
+        
+        // Add entry details if they exist
+        if (entry.why) {
+            const whyDiv = document.createElement('div');
+            whyDiv.className = 'entry-detail';
+            const whyLabel = document.createElement('strong');
+            whyLabel.textContent = 'Why: ';
+            whyDiv.appendChild(whyLabel);
+            whyDiv.appendChild(document.createTextNode(entry.why));
+            entryDiv.appendChild(whyDiv);
+        }
+        
+        if (entry.high) {
+            const highDiv = document.createElement('div');
+            highDiv.className = 'entry-detail';
+            const highLabel = document.createElement('strong');
+            highLabel.textContent = 'High: ';
+            highDiv.appendChild(highLabel);
+            highDiv.appendChild(document.createTextNode(entry.high));
+            entryDiv.appendChild(highDiv);
+        }
+        
+        if (entry.low) {
+            const lowDiv = document.createElement('div');
+            lowDiv.className = 'entry-detail';
+            const lowLabel = document.createElement('strong');
+            lowLabel.textContent = 'Low: ';
+            lowDiv.appendChild(lowLabel);
+            lowDiv.appendChild(document.createTextNode(entry.low));
+            entryDiv.appendChild(lowDiv);
+        }
+        
+        if (entry.grateful) {
+            const gratefulDiv = document.createElement('div');
+            gratefulDiv.className = 'entry-detail';
+            const gratefulLabel = document.createElement('strong');
+            gratefulLabel.textContent = 'Grateful for: ';
+            gratefulDiv.appendChild(gratefulLabel);
+            gratefulDiv.appendChild(document.createTextNode(entry.grateful));
+            entryDiv.appendChild(gratefulDiv);
+        }
+        
         journalEntriesContainer.appendChild(entryDiv);
     });
 }

@@ -256,12 +256,78 @@ h2 {
     border: 1px solid #667eea;
 }
 
+.entry-detail {
+    margin-top: 10px;
+    color: #333;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.entry-detail strong {
+    color: #667eea;
+}
+
 /* Empty state */
 .empty-state {
     color: #999;
     font-style: italic;
     text-align: center;
     padding: 20px;
+}
+
+/* Entry form styles */
+.entry-form-section {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 12px;
+    border: 2px solid #667eea;
+}
+
+.entry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #667eea;
+    font-size: 1rem;
+}
+
+.form-input {
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.form-textarea {
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+}
+
+.form-textarea:focus {
+    outline: none;
+    border-color: #667eea;
 }
 
 /* Responsive design */
