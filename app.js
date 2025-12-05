@@ -8,12 +8,21 @@ const DEFAULT_FEELINGS = [
     { name: 'Sad', emoji: '😢', class: 'sad' }
 ];
 
+// Location emoji mapping
+const LOCATION_EMOJIS = {
+    "Dad's House": '🏠',
+    "Mom's House": '🏡'
+};
+
 // App state
 let customFeelings = [];
 let selectedFeelings = new Set();
 let journalEntries = [];
+let selectedLocation = null;
 
 // DOM elements
+const locationDadBtn = document.getElementById('location-dad');
+const locationMomBtn = document.getElementById('location-mom');
 const defaultFeelingsContainer = document.getElementById('default-feelings');
 const customFeelingsContainer = document.getElementById('custom-feelings');
 const customFeelingInput = document.getElementById('custom-feeling-input');
@@ -123,8 +132,34 @@ function createFeelingButton(name, emoji, type, cssClass, index) {
     return button;
 }
 
+// Handle location selection
+function selectLocation(location, button) {
+    // Update selected location
+    selectedLocation = location;
+    
+    // Update button states
+    document.querySelectorAll('.location-btn').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+    button.classList.add('selected');
+}
+
+// Validate location is selected
+function validateLocationSelected() {
+    if (!selectedLocation) {
+        alert('Please select a location first!');
+        return false;
+    }
+    return true;
+}
+
 // Toggle feeling selection
 function toggleFeeling(name, button) {
+    // Check if location is selected first
+    if (!validateLocationSelected()) {
+        return;
+    }
+    
     if (selectedFeelings.has(name)) {
         selectedFeelings.delete(name);
         button.classList.remove('selected');
@@ -216,6 +251,10 @@ function deleteCustomFeeling(index) {
 
 // Save journal entry
 function saveJournalEntry() {
+    if (!validateLocationSelected()) {
+        return;
+    }
+    
     if (selectedFeelings.size === 0) {
         alert('Please select at least one feeling');
         return;
@@ -227,6 +266,7 @@ function saveJournalEntry() {
     
     const entry = {
         date: selectedDate.toISOString(),
+        location: selectedLocation,
         feelings: Array.from(selectedFeelings),
         why: entryWhyInput.value.trim(),
         high: entryHighInput.value.trim(),
@@ -244,6 +284,10 @@ function saveJournalEntry() {
     saveToLocalStorage();
     
     // Clear selections and form
+    selectedLocation = null;
+    document.querySelectorAll('.location-btn').forEach(btn => {
+        btn.classList.remove('selected');
+    });
     selectedFeelings.clear();
     entryWhyInput.value = '';
     entryHighInput.value = '';
@@ -275,7 +319,7 @@ function renderJournalEntries() {
         const dateDiv = document.createElement('div');
         dateDiv.className = 'entry-date';
         const date = new Date(entry.date);
-        dateDiv.textContent = date.toLocaleDateString('en-US', { 
+        const formattedDate = date.toLocaleDateString('en-US', { 
             weekday: 'long', 
             year: 'numeric', 
             month: 'long', 
@@ -283,6 +327,14 @@ function renderJournalEntries() {
             hour: '2-digit',
             minute: '2-digit'
         });
+        
+        // Add location to the date display if it exists
+        if (entry.location) {
+            const locationEmoji = LOCATION_EMOJIS[entry.location] || '📍';
+            dateDiv.textContent = `📅 ${formattedDate} ${locationEmoji} ${entry.location}`;
+        } else {
+            dateDiv.textContent = `📅 ${formattedDate}`;
+        }
         
         const feelingsDiv = document.createElement('div');
         feelingsDiv.className = 'entry-feelings';
@@ -344,6 +396,15 @@ function renderJournalEntries() {
 
 // Attach event listeners
 function attachEventListeners() {
+    // Location selection
+    locationDadBtn.addEventListener('click', (e) => {
+        selectLocation("Dad's House", e.target);
+    });
+    
+    locationMomBtn.addEventListener('click', (e) => {
+        selectLocation("Mom's House", e.target);
+    });
+    
     addFeelingBtn.addEventListener('click', addCustomFeeling);
     
     customFeelingInput.addEventListener('keypress', (e) => {
