@@ -155,8 +155,7 @@ function renderSelectedFeelings() {
     
     // Show entry form and set date to today
     entryFormSection.style.display = 'block';
-    const now = new Date();
-    const today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+    const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
     entryDateInput.value = today;
     
     // Scroll to entry form
@@ -222,7 +221,8 @@ function saveJournalEntry() {
     }
     
     // Use the date from the form or default to today
-    const selectedDate = entryDateInput.value ? new Date(entryDateInput.value) : new Date();
+    // Parse the date as local time by appending a time component
+    const selectedDate = entryDateInput.value ? new Date(entryDateInput.value + 'T00:00:00') : new Date();
     
     const entry = {
         date: selectedDate.toISOString(),
