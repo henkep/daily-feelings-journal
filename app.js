@@ -8,6 +8,12 @@ const DEFAULT_FEELINGS = [
     { name: 'Sad', emoji: '😢', class: 'sad' }
 ];
 
+// Location emoji mapping
+const LOCATION_EMOJIS = {
+    "Dad's House": '🏠',
+    "Mom's House": '🏡'
+};
+
 // App state
 let customFeelings = [];
 let selectedFeelings = new Set();
@@ -138,11 +144,19 @@ function selectLocation(location, button) {
     button.classList.add('selected');
 }
 
+// Validate location is selected
+function validateLocationSelected() {
+    if (!selectedLocation) {
+        alert('Please select a location first!');
+        return false;
+    }
+    return true;
+}
+
 // Toggle feeling selection
 function toggleFeeling(name, button) {
     // Check if location is selected first
-    if (!selectedLocation) {
-        alert('Please select a location (Dad\'s House or Mom\'s House) first!');
+    if (!validateLocationSelected()) {
         return;
     }
     
@@ -237,8 +251,7 @@ function deleteCustomFeeling(index) {
 
 // Save journal entry
 function saveJournalEntry() {
-    if (!selectedLocation) {
-        alert('Please select a location first');
+    if (!validateLocationSelected()) {
         return;
     }
     
@@ -317,7 +330,7 @@ function renderJournalEntries() {
         
         // Add location to the date display if it exists
         if (entry.location) {
-            const locationEmoji = entry.location === "Dad's House" ? '🏠' : '🏡';
+            const locationEmoji = LOCATION_EMOJIS[entry.location] || '📍';
             dateDiv.textContent = `📅 ${formattedDate} ${locationEmoji} ${entry.location}`;
         } else {
             dateDiv.textContent = `📅 ${formattedDate}`;
