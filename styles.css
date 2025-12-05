@@ -52,6 +52,52 @@ h2 {
     border-bottom: 2px solid #e0e0e0;
 }
 
+/* Location selector styles */
+.location-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 25px;
+    border-radius: 12px;
+    border: 2px solid #667eea;
+}
+
+.location-selector {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.location-btn {
+    padding: 20px;
+    border: 3px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.location-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border-color: #667eea;
+}
+
+.location-btn:active {
+    transform: translateY(0);
+}
+
+.location-btn.selected {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #667eea;
+    transform: scale(1.03);
+    box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+}
+
 /* Feelings grid */
 .feelings-grid {
     display: grid;
