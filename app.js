@@ -323,9 +323,7 @@ function renderJournalEntries() {
             weekday: 'long', 
             year: 'numeric', 
             month: 'long', 
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
+            day: 'numeric'
         });
         
         // Add location to the date display if it exists
