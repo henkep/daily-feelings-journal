@@ -1,13 +1,59 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Feelings Journal</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌸 Daily Feelings Journal 🌸</h1>
+            <p class="subtitle">How are you feeling today, Karl?</p>
+        </header>
+
+        <main>
+            <section class="feelings-section">
+                <h2>Default Feelings</h2>
+                <div id="default-feelings" class="feelings-grid">
+                    <!-- Default feelings will be rendered here -->
+                </div>
+            </section>
+
+            <section class="custom-feelings-section">
+                <h2>Custom Feelings</h2>
+                <div class="add-feeling-form">
+                    <input 
+                        type="text" 
+                        id="custom-feeling-input" 
+                        placeholder="Enter a new feeling..."
+                        maxlength="20"
+                    >
+                    <button id="add-feeling-btn" class="btn-primary">Add Feeling</button>
+                </div>
+                <div id="custom-feelings" class="feelings-grid">
+                    <!-- Custom feelings will be rendered here -->
+                </div>
+            </section>
+
+            <section class="selected-feelings-section">
+                <h2>Selected Feelings</h2>
+                <div id="selected-feelings" class="selected-feelings-list">
+                    <p class="empty-state">No feelings selected yet. Click on any feeling above!</p>
+                </div>
+            </section>
+
+            <section class="journal-entries-section">
+                <h2>Recent Entries</h2>
+                <div id="journal-entries" class="journal-entries-list">
+                    <p class="empty-state">No entries yet. Select feelings to create your first entry!</p>
+                </div>
+                <button id="save-entry-btn" class="btn-primary btn-save" style="display: none;">Save Entry</button>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
 </html>
