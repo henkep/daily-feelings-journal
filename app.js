@@ -155,7 +155,8 @@ function renderSelectedFeelings() {
     
     // Show entry form and set date to today
     entryFormSection.style.display = 'block';
-    const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
+    // Using 'en-CA' locale to get YYYY-MM-DD format for date input (ISO 8601 format)
+    const today = new Date().toLocaleDateString('en-CA');
     entryDateInput.value = today;
     
     // Scroll to entry form
