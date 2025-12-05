@@ -44,12 +44,43 @@
                 </div>
             </section>
 
+            <section class="entry-form-section" id="entry-form-section" style="display: none;">
+                <h2>Journal Entry</h2>
+                <div class="entry-form">
+                    <div class="form-group">
+                        <label for="entry-date">Date</label>
+                        <input type="date" id="entry-date" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="entry-why">Why are you feeling this way?</label>
+                        <textarea id="entry-why" class="form-textarea" rows="3" placeholder="Describe what's making you feel this way..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="entry-high">What is your high for the day?</label>
+                        <input type="text" id="entry-high" class="form-input" placeholder="What was the best part of your day?">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="entry-low">What is your low for the day?</label>
+                        <input type="text" id="entry-low" class="form-input" placeholder="What was the most challenging part?">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="entry-grateful">I'm grateful for this today:</label>
+                        <textarea id="entry-grateful" class="form-textarea" rows="3" placeholder="What are you grateful for today?"></textarea>
+                    </div>
+                    
+                    <button id="save-entry-btn" class="btn-primary btn-save">Save Entry</button>
+                </div>
+            </section>
+
             <section class="journal-entries-section">
                 <h2>Recent Entries</h2>
                 <div id="journal-entries" class="journal-entries-list">
                     <p class="empty-state">No entries yet. Select feelings to create your first entry!</p>
                 </div>
-                <button id="save-entry-btn" class="btn-primary btn-save" style="display: none;">Save Entry</button>
             </section>
         </main>
     </div>
