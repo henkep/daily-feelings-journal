@@ -283,6 +283,7 @@ h2 {
     background: #f8f9fa;
     border-radius: 12px;
     border-left: 4px solid #667eea;
+    position: relative;
 }
 
 .entry-date {
@@ -295,6 +296,7 @@ h2 {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    margin-bottom: 10px;
 }
 
 .entry-feeling-tag {
@@ -316,6 +318,34 @@ h2 {
 
 .entry-detail strong {
     color: #667eea;
+}
+
+/* Delete button for journal entries */
+.entry-delete-btn {
+    margin-top: 15px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.entry-delete-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(238, 90, 111, 0.3);
+    background: linear-gradient(135deg, #ee5a6f 0%, #ff6b6b 100%);
+}
+
+.entry-delete-btn:active {
+    transform: translateY(0);
 }
 
 /* Empty state */
