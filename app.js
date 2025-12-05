@@ -303,6 +303,15 @@ function saveJournalEntry() {
     journalEntriesContainer.scrollIntoView({ behavior: 'smooth' });
 }
 
+// Delete journal entry
+function deleteJournalEntry(index) {
+    if (confirm('Are you sure you want to delete this entry? This action cannot be undone.')) {
+        journalEntries.splice(index, 1);
+        saveToLocalStorage();
+        renderJournalEntries();
+    }
+}
+
 // Render journal entries
 function renderJournalEntries() {
     journalEntriesContainer.innerHTML = '';
@@ -312,7 +321,7 @@ function renderJournalEntries() {
         return;
     }
     
-    journalEntries.forEach(entry => {
+    journalEntries.forEach((entry, index) => {
         const entryDiv = document.createElement('div');
         entryDiv.className = 'journal-entry';
         
@@ -389,6 +398,14 @@ function renderJournalEntries() {
             gratefulDiv.appendChild(document.createTextNode(entry.grateful));
             entryDiv.appendChild(gratefulDiv);
         }
+        
+        // Add delete button
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'entry-delete-btn';
+        deleteBtn.innerHTML = '🗑️ Delete';
+        deleteBtn.title = 'Delete this entry';
+        deleteBtn.addEventListener('click', () => deleteJournalEntry(index));
+        entryDiv.appendChild(deleteBtn);
         
         journalEntriesContainer.appendChild(entryDiv);
     });
